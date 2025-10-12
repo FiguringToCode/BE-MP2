@@ -48,7 +48,7 @@ app.post('/leads', async (req, res) => {
 
 const getAllLeads = async () => {
     try {
-        const leads = await Lead.find()
+        const leads = await Lead.find().populate('salesAgent')
         return leads
 
     } catch (error) {
