@@ -186,7 +186,7 @@ app.post('/leads/comments', async (req, res) => {
 
 const getAllComments = async () => {
     try {
-        const getComments = await Comments.find().populate('author', 'lead')
+        const getComments = await Comments.find().populate('author, lead')
         return getComments
 
     } catch (error) {
