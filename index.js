@@ -237,7 +237,7 @@ const getTotalPipelineLeads = async () => {
         const openLeads2 = await Lead.find({status: "Contacted"})
         const openLeads3 = await Lead.find({status: "Qualified"})
         const openLeads4 = await Lead.find({status: "Proposal Sent"})
-        return openLeads1, openLeads2, openLeads3, openLeads4
+        return [...openLeads1, ...openLeads2, ...openLeads3, ...openLeads4]
 
     } catch (error) {
         throw error
