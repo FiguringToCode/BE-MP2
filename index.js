@@ -212,7 +212,7 @@ app.get('/leads/comments', async (req, res) => {
 
 const leadsClosedLastWeek = async () => {
     try {
-        const leads = await Lead.find({status: "Closed"})
+        const leads = await Lead.find({status: "Closed"}).populate("salesAgent")
         return leads
 
     } catch (error) {
