@@ -32,6 +32,7 @@ const createNewLead = async (newLead) => {
 }
 
 app.post('/leads', async (req, res) => {
+    console.log(req.body)
     try {
         const leads = await createNewLead(req.body)
         leads ? 
@@ -48,7 +49,7 @@ app.post('/leads', async (req, res) => {
 
 const getAllLeads = async () => {
     try {
-        const leads = await Lead.find()
+        const leads = await Lead.find().populate('salesAgent')
         return leads
 
     } catch (error) {
@@ -79,6 +80,7 @@ const updateLeadById = async (leadId, dataToUpdate) => {
 }
 
 app.post('/leads/update/:leadId', async (req, res) => {
+    console.log(req.body)
     try {
         const updatedLead = await updateLeadById(req.params.leadId, req.body)
         updatedLead ? res.status(200).json({message: "Lead updated successfully", lead: updatedLead}) : res.status(400).json({error: "Lead not found or check all fields"})
@@ -160,6 +162,28 @@ app.get('/salesAgent', async (req, res) => {
 
 
 
+const deleteAgentById = async (agentId) => {
+    try {
+        const AgentToDelete = await SalesAgent.findByIdAndDelete(agentId)
+        return AgentToDelete
+
+    } catch (error) {
+        throw error
+    }
+}
+
+app.delete('/salesAgent/delete/:agentId', async (req, res) => {
+    try {
+        const deletedAgent = await deleteAgentById(req.params.agentId)
+        deletedAgent ? res.status(200).json({message: "Agent deleted successfully.", lead: deletedAgent}) : res.status(400).json({error: "Agent not found"})
+
+    } catch (error) {
+        res.status(404).json({error: error.message})
+    }
+})
+
+
+
 
 
 const createComments = async (newComment) => {
@@ -173,6 +197,7 @@ const createComments = async (newComment) => {
 }
 
 app.post('/leads/comments', async (req, res) => {
+    console.log(req.body)
     try {
         const newComment = createComments(req.body)
         newComment ? res.status(201).json({message: "Comment added successfully", comment: newComment}) : res.status(400).json({error: "Error adding new comment or check all input fields"})
@@ -187,6 +212,8 @@ app.post('/leads/comments', async (req, res) => {
 const getAllComments = async () => {
     try {
         const getComments = await Comments.find()
+        .populate('author')
+        .populate('lead ')
         return getComments
 
     } catch (error) {
@@ -235,7 +262,7 @@ const getTotalPipelineLeads = async () => {
         const openLeads2 = await Lead.find({status: "Contacted"})
         const openLeads3 = await Lead.find({status: "Qualified"})
         const openLeads4 = await Lead.find({status: "Proposal Sent"})
-        return {openLeads1, openLeads2, openLeads3, openLeads4}
+        return [...openLeads1, ...openLeads2, ...openLeads3, ...openLeads4]
 
     } catch (error) {
         throw error

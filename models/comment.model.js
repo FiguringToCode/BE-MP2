@@ -15,11 +15,7 @@ const commentSchema = new mongoose.Schema({
   commentText: {
     type: String,
     required: [true, 'Comment text is required'],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,  // Automatically set the creation time
   }
 });
 
-module.exports = mongoose.model('Comment', commentSchema);
+module.exports = mongoose.model('Comments', commentSchema);
