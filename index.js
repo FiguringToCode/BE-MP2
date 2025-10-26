@@ -160,6 +160,28 @@ app.get('/salesAgent', async (req, res) => {
 
 
 
+const deleteAgentById = async (agentId) => {
+    try {
+        const AgentToDelete = await SalesAgent.findByIdAndDelete(agentId)
+        return AgentToDelete
+
+    } catch (error) {
+        throw error
+    }
+}
+
+app.delete('/salesAgent/delete/:agentId', async (req, res) => {
+    try {
+        const deletedAgent = await deleteAgentById(req.params.agentId)
+        deletedAgent ? res.status(200).json({message: "Agent deleted successfully.", lead: deletedAgent}) : res.status(400).json({error: "Agent not found"})
+
+    } catch (error) {
+        res.status(404).json({error: error.message})
+    }
+})
+
+
+
 
 
 const createComments = async (newComment) => {
