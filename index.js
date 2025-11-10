@@ -212,8 +212,13 @@ app.post('/leads/comments', async (req, res) => {
 const getAllComments = async () => {
     try {
         const getComments = await Comments.find()
+<<<<<<< HEAD
         .populate('author')
         .populate('lead ')
+=======
+            .populate('author')
+            .populate('lead')
+>>>>>>> 587f2696062a9320a19234e7cd41bfc310e332fc
         return getComments
 
     } catch (error) {
@@ -237,7 +242,7 @@ app.get('/leads/comments', async (req, res) => {
 
 const leadsClosedLastWeek = async () => {
     try {
-        const leads = await Lead.find({status: "Closed"})
+        const leads = await Lead.find({status: "Closed"}).populate("salesAgent")
         return leads
 
     } catch (error) {
@@ -280,7 +285,7 @@ app.get('/report/pipeline', async (req, res) => {
 
 
 
-const PORT = 3000;
+const PORT = process.env.MONGODB;
 app.listen(PORT, () => {
     console.log("Server connected to port", PORT)
 })

@@ -13,4 +13,4 @@ const initializeDatabase = () => {
     })
 }
 
-module.exports = {initializeDatabase}
+module.exports = { initializeDatabase }
