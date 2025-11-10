@@ -212,13 +212,9 @@ app.post('/leads/comments', async (req, res) => {
 const getAllComments = async () => {
     try {
         const getComments = await Comments.find()
-<<<<<<< HEAD
         .populate('author')
         .populate('lead ')
-=======
-            .populate('author')
-            .populate('lead')
->>>>>>> 587f2696062a9320a19234e7cd41bfc310e332fc
+
         return getComments
 
     } catch (error) {
