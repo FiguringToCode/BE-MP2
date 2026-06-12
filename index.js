@@ -1,7 +1,7 @@
 const {initializeDatabase} = require('./db/db.connect')
 const Lead = require('./models/leads.model')
 const SalesAgent = require('./models/salesAgent.model')
-const Comments = require('./models/comment.model')
+const Comment = require('./models/comment.model')
 
 const express = require('express')
 const app = express()
@@ -186,9 +186,9 @@ app.delete('/salesAgent/delete/:agentId', async (req, res) => {
 
 
 
-const createComments = async (newComment) => {
+const createComment = async (newComment) => {
     try {
-        const comment = new Comments(newComment)
+        const comment = new Comment(newComment)
         return await comment.save()
 
     } catch (error) {
@@ -199,7 +199,7 @@ const createComments = async (newComment) => {
 app.post('/leads/comments', async (req, res) => {
     console.log(req.body)
     try {
-        const newComment = createComments(req.body)
+        const newComment = await createComment(req.body)
         newComment ? res.status(201).json({message: "Comment added successfully", comment: newComment}) : res.status(400).json({error: "Error adding new comment or check all input fields"})
 
     } catch (error) {
@@ -211,9 +211,9 @@ app.post('/leads/comments', async (req, res) => {
 
 const getAllComments = async () => {
     try {
-        const getComments = await Comments.find()
+        const getComments = await Comment.find()
         .populate('author')
-        .populate('lead ')
+        .populate('lead')
 
         return getComments
 
@@ -281,7 +281,7 @@ app.get('/report/pipeline', async (req, res) => {
 
 
 
-const PORT = process.env.MONGODB;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log("Server connected to port", PORT)
 })

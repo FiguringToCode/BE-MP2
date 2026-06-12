@@ -7,10 +7,8 @@ const tagSchema = new mongoose.Schema({
     required: [true, 'Tag name is required'],
     unique: true,  // Ensures that each tag name is unique
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  }
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('Tag', tagSchema);

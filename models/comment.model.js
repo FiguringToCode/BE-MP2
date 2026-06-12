@@ -16,6 +16,8 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Comment text is required'],
   }
+}, {
+  timestamps: true
 });
 
-module.exports = mongoose.model('Comments', commentSchema);
+module.exports = mongoose.model('Comment', commentSchema);

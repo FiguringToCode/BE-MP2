@@ -27,7 +27,7 @@ const leadsSchema = new mongoose.Schema({
     timeToClose: {
         type: Number,
         required: [true, 'Time to Close is required'],
-        min: [1, 'Time to Close must be a positive number']
+        min: [0, 'Time to Close must be a positive number']
     },
     priority: {
         type: String,
@@ -42,5 +42,9 @@ const leadsSchema = new mongoose.Schema({
 {
     timestamps: true
 })
+
+leadsSchema.index({ status: 1 });
+leadsSchema.index({ salesAgent: 1 });
+leadsSchema.index({ source: 1 })
 
 module.exports = mongoose.model('Lead', leadsSchema)

@@ -11,10 +11,9 @@ const salesAgentSchema = new mongoose.Schema({
     required: [true, 'Sales Agent email is required'],
     unique: true,  // Email must be unique across agents
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  }
+},
+{
+  timestamps: true
 });
 
 module.exports = mongoose.model('SalesAgent', salesAgentSchema);
